@@ -1,0 +1,39 @@
+<!DOCTYPE HTML>
+<html>
+    <head>
+        <title>DeepAR</title>
+        <style>
+            body {
+                margin: 0px;
+                padding: 0px;        
+            }
+        </style>
+    </head>
+    
+    <body>
+        <canvas id="deepar-canvas"></canvas>
+
+        <script type="text/javascript" src="lib/deepar.js"></script>
+        <script type="text/javascript">
+            // Initialize the DeepAR object
+            var deepAR = DeepAR({
+                licenseKey: 'your license key goes here',
+                canvasWidth: window.innerWidth, 
+                canvasHeight: window.innerHeight,
+                canvas: document.getElementById('deepar-canvas'),
+                numberOfFaces: 1, // how many faces we want to track min 1, max 4
+                onInitialize: function() {
+                // start video immediately after the initalization, mirror = true
+                deepAR.startVideo(true);
+                // load the aviators effect on the first face into slot 'slot'
+                deepAR.switchEffect(0, 'slot', './aviators', function() {
+                    // effect loaded
+                });
+                }
+            });
+
+            // download the face tracking model
+            deepAR.downloadFaceTrackingModel('models/models-68-extreme.bin');
+        </script>
+    </body>
+</html>
