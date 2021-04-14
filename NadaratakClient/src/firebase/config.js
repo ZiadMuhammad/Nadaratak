@@ -1,6 +1,6 @@
 require('dotenv').config();
 
-export const config firebaseConfig = {
+export const firebaseConfig = {
         apiKey: process.env.API_KEY,
         authDomain: process.env.AUTH_NAME,
         projectId: process.env.PROJECT_ID,
