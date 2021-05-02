@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
-import { signInUser, resetAllAuthForms } from './../../redux/User/user.actions';
+import { emailSignInStart, resetAllAuthForms } from './../../redux/User/user.actions';
 
 import { withRouter } from 'react-router-dom';
 import './styles.scss';
@@ -10,22 +10,21 @@ import { signInWithGoogle } from './../../firebase/utils.js';
 import FormInput from './../forms/FormInput';
 
 const mapState = ({ user }) => ({
-    signInSuccess: user.signInSuccess
+    currentUser: user.currentUser
 })
 
 const SignIn = props => {
-    const { signInSuccess } = useSelector(mapState);
+    const { currentUser } = useSelector(mapState);
     const dispatch = useDispatch();
     const [email, setEmail] = useState('');
     const [password, setPassword] = useState('');
 
     useEffect(() => {
-        if(signInSuccess) {
+        if(currentUser) {
             resetForm();
-            dispatch(resetAllAuthForms());
             props.history.push('/');
         }
-    }, [signInSuccess])
+    }, [currentUser])
 
     const resetForm = () => {
         setEmail('');
@@ -34,7 +33,7 @@ const SignIn = props => {
 
     const handleSubmit = e => {
         e.preventDefault();
-        dispatch(signInUser({email, password}));
+        dispatch(emailSignInStart({email, password}));
     }
     
         return (
