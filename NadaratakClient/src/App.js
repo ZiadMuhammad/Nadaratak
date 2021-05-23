@@ -17,6 +17,7 @@ import AdminLayout from './layouts/AdminLayout';
 
 //Pages
 import Homepage from './pages/Homepage';
+import Search from './pages/Search';
 import Registration from './pages/Registration';
 import Login from './pages/Login';
 import Dashboard from  './pages/Dashboard';
@@ -41,6 +42,16 @@ const App = props => {
                 </HomepageLayout>
               )
             } />
+            <Route exact path="/search" render={() => (
+              <MainLayout>
+                <Search />
+              </MainLayout>  
+            )} />
+            <Route path="/search/:filterType" render={() => (
+              <MainLayout>
+                <Search />
+              </MainLayout>  
+            )} />
             <Route path="/registration" render={
               () => (
                 <MainLayout>

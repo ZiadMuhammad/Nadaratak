@@ -1,4 +1,5 @@
-from flask import Flask, render_template, request 
+from flask import Flask,jsonify, render_template, request 
+from flask_cors import CORS, cross_origin
 from werkzeug.utils import secure_filename
 from werkzeug.datastructures import  FileStorage
 from keras.preprocessing.image import ImageDataGenerator
@@ -11,6 +12,7 @@ import os
   
 model = tf.keras.models.load_model('model/keras_model.h5') 
 app = Flask(__name__) 
+CORS(app)
   
 app.config['UPLOAD_FOLDER'] = './uploaded/image'
   
@@ -35,13 +37,17 @@ def finds():
     return str(vals[np.argmax(pred)]) 
   
 @app.route('/uploader', methods = ['GET', 'POST']) 
+@cross_origin()
 def upload_file(): 
     if request.method == 'POST': 
         f = request.files['file'] 
         f.save(os.path.join(app.config['UPLOAD_FOLDER'], secure_filename(f.filename))) 
         val = finds() 
         os.remove(os.path.join(app.config['UPLOAD_FOLDER'], secure_filename(f.filename)))
-        return render_template('pred.html', ss = val)
+        return jsonify(
+            faceshape = val
+        )
+        #return render_template('pred.html', ss = val)
 
 @app.route('/predict', methods = ['POST']) 
 def predict_sign(): 

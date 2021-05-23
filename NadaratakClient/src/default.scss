@@ -41,8 +41,10 @@ a {
 // }
 
 .main {
+    display: block;
+    overflow: auto;
     width: 100%;
-    // height: calc(100% - 10rem);
+    //height: calc(100% - 10rem);
     min-height: calc(100vh - 5rem);
     max-width: 1450px;
     padding: 0 50px;
@@ -78,4 +80,8 @@ a {
   
 .dashboardLayout {
   height: calc(100% - 6.5rem - 5.8rem);
+}
+
+.searchPage {
+  height: 100%;
 }
